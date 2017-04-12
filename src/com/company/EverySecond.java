@@ -27,18 +27,18 @@ public class EverySecond implements Runnable{
     public void run() {
         int timeToSleep = 5000;
         while (!listOfNumbers.to_stop){
-            listStatistics();
             try {
                 Thread.sleep(timeToSleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            listStatistics();
             check_stop();
         }
     }
 
     private void check_stop() {
-        int whenStop = 5;//по заданию 1
+        Integer whenStop = 5;
         for (Map.Entry<Integer, Integer> element : statistics.entrySet())
         {
             if (element.getValue() >= whenStop){

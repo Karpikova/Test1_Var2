@@ -24,7 +24,7 @@ public class AnalysOfNumbers implements Runnable{
         Random rand = new Random();
         int currentNumber;
         int timeToSleep = 1000;
-        while (!listOfNumbers.to_stop){
+        while (!listOfNumbers.to_stop){ //хм, я сделала без wait и notify...
             currentNumber = rand.nextInt(99);
             listOfNumbers.numbers.add(currentNumber);
             try {
