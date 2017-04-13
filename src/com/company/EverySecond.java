@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /*
  * ${Classname}
@@ -15,53 +16,27 @@ import java.util.Map;
 public class EverySecond implements Runnable{
 
     private ListOfNumbers listOfNumbers;
-    private Map<Integer, Integer> statistics;
-
 
     public EverySecond(ListOfNumbers listOfNumbers) {
         this.listOfNumbers = listOfNumbers;
-        this.statistics = new HashMap<>();
     }
 
     @Override
     public void run() {
-        int timeToSleep = 5000;
-        while (!listOfNumbers.to_stop){
+        Random rand = new Random();
+        int currentNumber;
+        int timeToSleep = 1000;
+        int max = 99;
+        while (!listOfNumbers.to_stop){ //хм, я сделала без wait и notify...
+            // а с ними бы и не получилось, т.к. поток должен не только ждать условия прекращения,
+            // но и продолжать выполняться
+            currentNumber = rand.nextInt(max);
+            listOfNumbers.numbers.add(currentNumber);
             try {
                 Thread.sleep(timeToSleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            listStatistics();
-            check_stop();
-        }
-    }
-
-    private void check_stop() {
-        Integer whenStop = 5;
-        for (Map.Entry<Integer, Integer> element : statistics.entrySet())
-        {
-            if (element.getValue() >= whenStop){
-                listOfNumbers.setTo_stop(true);
-            }
-        }
-    }
-
-    private void listStatistics() {
-        clearStatistic();
-        int cur_num;
-        int cur_quan;
-        for(int i = 0; i < listOfNumbers.numbers.size(); i++) {
-            cur_num = listOfNumbers.numbers.get(i);
-            cur_quan = statistics.get(cur_num);
-            statistics.put(cur_num, cur_quan+1);
-        }
-        System.out.println(statistics);
-    }
-
-    private void clearStatistic() {
-        for (int i = 0; i < 100; i++){
-            statistics.put(i, 0);
         }
     }
 }
