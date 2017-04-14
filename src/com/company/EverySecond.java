@@ -31,7 +31,10 @@ public class EverySecond implements Runnable{
             // а с ними бы и не получилось, т.к. поток должен не только ждать условия прекращения,
             // но и продолжать выполняться
             currentNumber = rand.nextInt(max);
-            listOfNumbers.numbers.add(currentNumber);
+            synchronized (listOfNumbers)
+            {
+                listOfNumbers.numbers.add(currentNumber);
+            }
             try {
                 Thread.sleep(timeToSleep);
             } catch (InterruptedException e) {

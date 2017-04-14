@@ -13,7 +13,7 @@ import java.util.List;
  * Karpikova
  */
 public class ListOfNumbers {
-    static volatile List<Integer> numbers;
+    static List<Integer> numbers;
     static volatile boolean to_stop;
 
     static {

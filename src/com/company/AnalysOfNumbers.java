@@ -39,7 +39,7 @@ public class AnalysOfNumbers implements Runnable{
     }
 
     private void check_stop() {
-        Integer whenStop = 3;
+        Integer whenStop = 5;
         for (Map.Entry<Integer, Integer> element : statistics.entrySet())
         {
             if (element.getValue() >= whenStop){
@@ -52,10 +52,12 @@ public class AnalysOfNumbers implements Runnable{
         clearStatistic();
         int cur_num;
         int cur_quan;
-        for(int i = 0; i < listOfNumbers.numbers.size(); i++) {
-            cur_num = listOfNumbers.numbers.get(i);
-            cur_quan = statistics.get(cur_num);
-            statistics.put(cur_num, cur_quan+1);
+        synchronized (listOfNumbers) {
+            for (int i = 0; i < listOfNumbers.numbers.size(); i++) {
+                cur_num = listOfNumbers.numbers.get(i);
+                cur_quan = statistics.get(cur_num);
+                statistics.put(cur_num, cur_quan + 1);
+            }
         }
         System.out.println(statistics);
     }
